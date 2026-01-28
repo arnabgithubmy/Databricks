@@ -7,14 +7,10 @@ resources:
       name: DABdemojenkins
       tasks:
         - task_key: task
-          spark_python_task:
-            python_file: ./dabdemo.py
-          # 👇 IMPORTANT: no new_cluster, no compute settings here
-      environments:
-        - environment_key: default
-          spec:
-            # Pick a serverless environment version; 2 is fine for now
-            environment_version: '2'
+          sql_task:
+            warehouse_id: "bb588ff42268f1ce"
+            query:
+              query_id: "cda33699-6510-4805-915f-438aa6528b00&o=1967672917288818"      
 
       queue:
         enabled: true
