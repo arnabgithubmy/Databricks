@@ -18,6 +18,9 @@ resources:
 permissions:
   - group_name: de_grp
     level: CAN_MANAGE
+  - service_principal_name: 8b7b2401-db18-4e82-a1c7-73c1da0d54da
+    level: CAN_MANAGE
+
 
 targets:
   dev:
