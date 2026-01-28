@@ -1,0 +1,39 @@
+bundle:
+  name: DABDemojenkins
+
+resources:
+  jobs:
+    DABdemojenkins:
+      name: DABdemojenkins
+      tasks:
+        - task_key: task
+          spark_python_task:
+            python_file: ./dabdemo.py
+
+          # You MUST specify a cluster (one of the two)
+          new_cluster:
+            spark_version: "13.3.x-scala2.12"
+            node_type_id: "i3.xlarge"
+            num_workers: 1
+
+      queue:
+        enabled: true
+      performance_target: PERFORMANCE_OPTIMIZED
+
+permissions:
+  - group_name: de_grp
+    level: CAN_MANAGE
+  - service_principal_name: 8b7b2401-db18-4e82-a1c7-73c1da0d54da
+    level: CAN_MANAGE
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-3918387b-cc06.cloud.databricks.com/
+
+  qa:
+    workspace:
+      host: https://dbc-3918387b-cc06.cloud.databricks.com/
+
