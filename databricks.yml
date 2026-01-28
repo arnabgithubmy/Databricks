@@ -10,6 +10,11 @@ resources:
           spark_python_task:
             python_file: ./dabdemo.py
           # 👇 IMPORTANT: no new_cluster, no compute settings here
+      environments:
+        - environment_key: default
+          spec:
+            # Pick a serverless environment version; 2 is fine for now
+            environment_version: '2'
 
       queue:
         enabled: true
