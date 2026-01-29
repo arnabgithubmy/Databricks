@@ -1,0 +1,46 @@
+name: Databricks Bundle CI/CD
+
+on:
+  push:
+    branches:
+      - gitaction         # run on changes to main
+  workflow_dispatch: # allow manual trigger
+
+jobs:
+  deploy-bundle:
+    runs-on: ubuntu-latest
+
+    env:
+      # Databricks auth via env vars (used by Databricks CLI)
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+
+      # Bundle target (matches your databricks.yml)
+      BUNDLE_TARGET: dev
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Databricks CLI
+        run: |
+          pip install "databricks-cli>=0.284.0" "databricks-bundles"
+
+      # Optional: sanity check auth
+      - name: Check Databricks CLI auth
+        run: |
+          databricks auth env
+          databricks workspace ls /
+
+      - name: Validate Databricks bundle
+        run: |
+          databricks bundle validate -t "$BUNDLE_TARGET"
+
+      - name: Deploy Databricks bundle
+        run: |
+          databricks bundle deploy -t "$BUNDLE_TARGET"
