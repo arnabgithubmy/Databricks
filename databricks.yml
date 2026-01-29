@@ -1,10 +1,10 @@
 bundle:
-  name: DABDemojenkins
+  name: DABDemoGIT
 
 resources:
   jobs:
     DABdemojenkins:
-      name: DABdemojenkins
+      name: DABdemoGIT
       tasks:
         - task_key: task
           sql_task:
